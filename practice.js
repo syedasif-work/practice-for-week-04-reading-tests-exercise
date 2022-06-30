@@ -33,10 +33,12 @@ const recipes = {
 /* DO NOT CHANGE THE CODE ABOVE */
 
 /*************************** FUNCTION TO REFACTOR ****************************/
-function bakeAndSellPies(pieType, pieQuantity, profitMargin) {
-  // Find the recipe for the pieType specified
-  const recipe = recipes[pieType];
-  // Bake the number of pies specified by the pieQuantity
+
+let costPie = (recipe) => recipe.reduce((prev, current) => {
+  return prev + current.cost;
+}, recipe[0].cost);
+
+let bakePie = (recipe, pieQuantity, pieType) => {
   for (let i = 0; i < pieQuantity; i++) {
     // Print the ingredients for each ingredient in the recipe
     let combiningMsg = `Combining ingredients for ${pieType}: `
@@ -46,11 +48,16 @@ function bakeAndSellPies(pieType, pieQuantity, profitMargin) {
     // Print the nth pie that was baked
     console.log(`Baked pie ${i + 1}!`);
   }
+}
+
+function bakeAndSellPies(pieType, pieQuantity, profitMargin) {
+  // Find the recipe for the pieType specified
+  const recipe = recipes[pieType];
+  // Bake the number of pies specified by the pieQuantity
+  bakePie(recipe, pieQuantity, pieType)
 
   // Print the cost of each pie based on the cost of each ingredient
-  const costOfPie = recipe.reduce((prev, current) => {
-    return prev + current.cost;
-  }, recipe[0].cost);
+  const costOfPie = costPie(recipe)
   console.log(`Cost per pie: ${costOfPie}`);
 
   // Calculate the total cost of all the pies
